@@ -9,5 +9,11 @@
 import UIKit
 
 class UsersViewController: UITableViewController {
+    
+    lazy var dataSource = UserDataSource()
+    
+    override func viewDidLoad() {
+        dataSource.getAllUsers()
+    }
 
 }

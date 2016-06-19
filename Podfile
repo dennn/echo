@@ -6,6 +6,7 @@ target 'Echo' do
   use_frameworks!
 
   # Pods for Echo
-  pod 'Firebase'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
 end
