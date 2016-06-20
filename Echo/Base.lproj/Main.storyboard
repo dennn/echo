@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Users-->
@@ -14,6 +15,25 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserCell" textLabel="L3X-lE-L0J" style="IBUITableViewCellStyleDefault" id="21g-3P-nMM">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="21g-3P-nMM" id="S1q-8y-A3C">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L3X-lE-L0J">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="cM9-ab-roT" id="ZHE-on-Rrh"/>
                             <outlet property="delegate" destination="cM9-ab-roT" id="MfP-HJ-T9V"/>
@@ -28,6 +48,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fd6-2J-7NA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="916" y="-832"/>
+        </scene>
+        <!--Linear Equation Solver-->
+        <scene sceneID="BjL-XK-cQC">
+            <objects>
+                <viewController title="Linear Equation Solver" id="6J2-13-kgH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cMz-ud-u49"/>
+                        <viewControllerLayoutGuide type="bottom" id="6d1-28-YUX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3Lw-k0-qX6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Mt-Uf-999">
+                                <rect key="frame" x="35" y="20" width="199" height="146"/>
+                                <color key="backgroundColor" red="1" green="0.75951879164604275" blue="0.55935204767189828" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" secondItem="9Mt-Uf-999" secondAttribute="width" multiplier="2" constant="320" id="Grz-q3-Rbw"/>
+                                    <constraint firstAttribute="width" secondItem="9Mt-Uf-999" secondAttribute="height" constant="-100" id="HjB-BD-ut9"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OPQ-TF-Ppy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="92" y="-1648"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7Ic-Bl-SNQ">

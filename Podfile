@@ -8,5 +8,6 @@ target 'Echo' do
   # Pods for Echo
   pod 'Firebase/Core'
   pod 'Firebase/Database'
+  pod 'SwiftyJSON'
 
 end
