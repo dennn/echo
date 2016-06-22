@@ -9,6 +9,7 @@
 import Foundation
 import FirebaseDatabase
 import SwiftyJSON
+import CoreData
 
 protocol DataSourceProtocol : class {
     func dataSourceDidUpdate()

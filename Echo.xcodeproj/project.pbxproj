@@ -104,7 +104,7 @@
 		A2C131571D1707F200C2C83E /* Echo */ = {
 			isa = PBXGroup;
 			children = (
-				A29EB8741D18545B00A2EC48 /* JSON+Date.swift */,
+				A2C582F71D1B03E000A1A676 /* Extensions */,
 				A23D1FD51D172808008BA24C /* Model */,
 				A2C131581D1707F200C2C83E /* AppDelegate.swift */,
 				A23D1FC51D1719B0008BA24C /* UsersViewController.swift */,
@@ -118,6 +118,14 @@
 				A23D1FBF1D170F74008BA24C /* GoogleService-Info.plist */,
 			);
 			path = Echo;
+			sourceTree = "<group>";
+		};
+		A2C582F71D1B03E000A1A676 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A29EB8741D18545B00A2EC48 /* JSON+Date.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

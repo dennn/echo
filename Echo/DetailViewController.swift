@@ -23,10 +23,6 @@ class DetailViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         print("Current user is \(self.currentUser)")
         self.title = self.currentUser?.fullName
-        
-        if ((self.currentUser?.dateOfBirth) != nil) {
-     //       self.datePicker?.date = self.currentUser!.dateOfBirth!
-        }
     }
     
     // MARK: Date Picker
@@ -75,7 +71,15 @@ class DetailViewController: UITableViewController {
                 return cell
             
             case .DatePicker:
-                let cell = tableView.dequeueReusableCellWithIdentifier("datePickerCell", forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCellWithIdentifier("datePickerCell", forIndexPath: indexPath) as! DatePickerCell
+                if (self.currentUser?.dateOfBirth != nil) {
+                    cell.datePicker?.date = self.currentUser!.dateOfBirth!
+                }
+                return cell
+            
+            case .DateRow:
+                let cell = tableView.dequeueReusableCellWithIdentifier("dateRowCell", forIndexPath: indexPath)
+                cell.detailTextLabel?.text = stringFromDate(self.currentUser!.dateOfBirth!)
                 return cell
            
             default:
@@ -98,9 +102,13 @@ class DetailViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellType = cellTypeForIndexPath(indexPath)
-
-        if self.shouldShowDatePicker == false && cellType == .DatePicker {
-            return 0
+        
+        if cellType == .DatePicker {
+            if self.shouldShowDatePicker == false {
+                return 0
+            } else {
+                return 218
+            }
         } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
         }
@@ -111,6 +119,14 @@ class DetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
+    }
+    
+    // MARK: Utility
+    
+    func stringFromDate(date : NSDate) -> String {
+        let dateString = NSDateFormatter.localizedStringFromDate(date, dateStyle: .MediumStyle, timeStyle: .NoStyle)
+        
+        return dateString
     }
 }
