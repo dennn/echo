@@ -8,10 +8,16 @@
 
 import UIKit
 
+enum CellType {
+    case DateRow
+    case DatePicker
+    case InformationCell
+    case Other
+}
+
 class DetailViewController: UITableViewController {
 
     var currentUser : User?
-    @IBOutlet weak var datePicker: UIDatePicker!
     private var shouldShowDatePicker = false
 
     override func viewWillAppear(animated: Bool) {
@@ -19,10 +25,11 @@ class DetailViewController: UITableViewController {
         self.title = self.currentUser?.fullName
         
         if ((self.currentUser?.dateOfBirth) != nil) {
-            self.datePicker.date = self.currentUser!.dateOfBirth!
+     //       self.datePicker?.date = self.currentUser!.dateOfBirth!
         }
     }
     
+    // MARK: Date Picker
 
     private func toggleDatePickerVisibility() {
         self.shouldShowDatePicker = !self.shouldShowDatePicker
@@ -32,36 +39,78 @@ class DetailViewController: UITableViewController {
             }, completion: nil)
     }
     
-    private func indexPathIsDateRow(indexPath : NSIndexPath) -> Bool {
-        if indexPath.row == 2 && indexPath.section == 0 {
-            return true
+    private func cellTypeForIndexPath(indexPath : NSIndexPath) -> CellType {
+        if indexPath.section == 0 {
+            switch (indexPath.row) {
+                case 0, 1:
+                    return .InformationCell
+                
+                case 2:
+                    return .DateRow
+                
+                case 3:
+                    return .DatePicker
+                
+                default:
+                    return .Other
+            }
         }
         
-        return false
-    }
-    
-    private func indexPathIsDatePickerRow(indexPath : NSIndexPath) -> Bool {
-        if indexPath.row == 3 && indexPath.section == 0 {
-            return true
-        }
-        
-        return false
+        return .Other
     }
     
     // MARK: Table View
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cellType = cellTypeForIndexPath(indexPath)
+    
+        switch (cellType) {
+            case .InformationCell:
+                let cell = tableView.dequeueReusableCellWithIdentifier("editableCell", forIndexPath: indexPath) as! EditableTableCell
+                if indexPath.row == 0 {
+                    cell.configure("Full Name", description: (self.currentUser?.fullName)!)
+                } else if indexPath.row == 1 {
+                    cell.configure("Email", description: (self.currentUser?.email)!)
+                }
+                return cell
+            
+            case .DatePicker:
+                let cell = tableView.dequeueReusableCellWithIdentifier("datePickerCell", forIndexPath: indexPath)
+                return cell
+           
+            default:
+                let cell = UITableViewCell(style: .Default, reuseIdentifier: "normalCell")
+                return cell
+        }
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPathIsDateRow(indexPath) {
+        let cellType = cellTypeForIndexPath(indexPath)
+        if cellType == .DateRow {
             self.toggleDatePickerVisibility()
+        } else if cellType == .InformationCell {
+            let cell = self.tableView .cellForRowAtIndexPath(indexPath) as! EditableTableCell
+            cell.activateTextField()
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if self.shouldShowDatePicker == false && indexPathIsDatePickerRow(indexPath) {
+        let cellType = cellTypeForIndexPath(indexPath)
+
+        if self.shouldShowDatePicker == false && cellType == .DatePicker {
             return 0
         } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
         }
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
     }
 }

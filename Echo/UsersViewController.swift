@@ -18,6 +18,7 @@ class UsersViewController: UITableViewController, DataSourceProtocol {
     
     override func viewWillAppear(animated: Bool) {
         self.dataSource.delegate = self
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
