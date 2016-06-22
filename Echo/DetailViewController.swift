@@ -55,6 +55,14 @@ class DetailViewController: UITableViewController {
         return .Other
     }
     
+    private func indexPathForCellType(type : CellType) -> NSIndexPath? {
+        if type == .DateRow {
+            return NSIndexPath(forRow: 2, inSection: 0)
+        }
+        
+        return nil
+    }
+    
     // MARK: Table View
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -72,6 +80,8 @@ class DetailViewController: UITableViewController {
             
             case .DatePicker:
                 let cell = tableView.dequeueReusableCellWithIdentifier("datePickerCell", forIndexPath: indexPath) as! DatePickerCell
+                cell.datePicker?.addTarget(self, action: #selector(DetailViewController.dateChanged(_:)), forControlEvents: .ValueChanged)
+                
                 if (self.currentUser?.dateOfBirth != nil) {
                     cell.datePicker?.date = self.currentUser!.dateOfBirth!
                 }
@@ -115,11 +125,21 @@ class DetailViewController: UITableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "User Details"
+        } else if section == 1 {
+            return "Medication"
+        }
+        
+        return nil
     }
     
     // MARK: Utility
@@ -129,4 +149,10 @@ class DetailViewController: UITableViewController {
         
         return dateString
     }
+    
+    func dateChanged(datePicker : UIDatePicker) {
+        self.currentUser?.dateOfBirth = datePicker.date
+        self.tableView.reloadData()
+    }
+    
 }
