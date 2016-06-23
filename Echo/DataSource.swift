@@ -8,8 +8,8 @@
 
 import Foundation
 import FirebaseDatabase
-import SwiftyJSON
 import CoreData
+import JSONCodable
 
 protocol DataSourceProtocol : class {
     func dataSourceDidUpdate()
@@ -41,27 +41,47 @@ class UserDataSource : DataSource {
     func listenForUserUpdates() {
         self.usersRef!.observeEventType(.Value, withBlock: { snapshot in
             
-            var newUsers = [User]()
-            
-            for item in snapshot.children {
-                if item is NSNull {
-                    continue
+            do {
+                var newUsers = [User]()
+                
+                for item in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                    if item.value is Dictionary<String, AnyObject> {
+                        print (item.value)
+                        let user = try User(object: item.value! as! JSONObject)
+                        print(user)
+                        newUsers.append(user)
+                    } else {
+                        print("The data structure is not a dictionary...")
+                    }
                 }
                 
-                let json = JSON(item.value!)
-                print(json)
-                let user = User(data : json)
-                newUsers.append(user)
+                self.users = newUsers.sort({$0.userID < $1.userID})
+                
+                // Tell the delegate listener that there is a new data source
+                self.delegate?.dataSourceDidUpdate()
+            } catch {
+                print("Error decoding JSON dictionary")
             }
-            
-            self.users = newUsers.sort({$0.userID < $1.userID})
-            
-            // Tell the delegate listener that there is a new data source
-            self.delegate?.dataSourceDidUpdate()
         })
     }
     
     func getAllUsers() -> [User] {
         return users
+    }
+    
+    func saveUser(user : User!) {
+        let userRef = self.usersRef!.child("\(user.userID)")
+        do {
+            let userJSON = try user.toJSON()
+            print(userJSON)
+            
+            userRef.updateChildValues(userJSON as! [NSObject : AnyObject]) { (err, ref) in
+                if err != nil {
+                    print(err!.localizedDescription)
+                }
+            }
+        } catch {
+            print("Error encoding the user as a JSON object")
+        }
     }
 }

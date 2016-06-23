@@ -19,10 +19,15 @@ class DetailViewController: UITableViewController {
 
     var currentUser : User?
     private var shouldShowDatePicker = false
+    var userDataSource : UserDataSource?
 
     override func viewWillAppear(animated: Bool) {
         print("Current user is \(self.currentUser)")
         self.title = self.currentUser?.fullName
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.userDataSource!.saveUser(self.currentUser!)
     }
     
     // MARK: Date Picker
@@ -82,14 +87,12 @@ class DetailViewController: UITableViewController {
                 let cell = tableView.dequeueReusableCellWithIdentifier("datePickerCell", forIndexPath: indexPath) as! DatePickerCell
                 cell.datePicker?.addTarget(self, action: #selector(DetailViewController.dateChanged(_:)), forControlEvents: .ValueChanged)
                 
-                if (self.currentUser?.dateOfBirth != nil) {
-                    cell.datePicker?.date = self.currentUser!.dateOfBirth!
-                }
+                cell.datePicker?.date = self.currentUser!.dateOfBirth
                 return cell
             
             case .DateRow:
                 let cell = tableView.dequeueReusableCellWithIdentifier("dateRowCell", forIndexPath: indexPath)
-                cell.detailTextLabel?.text = stringFromDate(self.currentUser!.dateOfBirth!)
+                cell.detailTextLabel?.text = self.currentUser?.dateOfBirthString
                 return cell
            
             default:
@@ -143,12 +146,6 @@ class DetailViewController: UITableViewController {
     }
     
     // MARK: Utility
-    
-    func stringFromDate(date : NSDate) -> String {
-        let dateString = NSDateFormatter.localizedStringFromDate(date, dateStyle: .MediumStyle, timeStyle: .NoStyle)
-        
-        return dateString
-    }
     
     func dateChanged(datePicker : UIDatePicker) {
         self.currentUser?.dateOfBirth = datePicker.date

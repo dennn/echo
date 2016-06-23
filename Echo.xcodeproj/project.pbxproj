@@ -14,7 +14,6 @@
 		A23D1FD01D17243B008BA24C /* Echo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A23D1FCE1D17243B008BA24C /* Echo.xcdatamodeld */; };
 		A29EB8711D17E50500A2EC48 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29EB8701D17E50500A2EC48 /* User.swift */; };
 		A29EB8731D183F5E00A2EC48 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29EB8721D183F5E00A2EC48 /* DetailViewController.swift */; };
-		A29EB8751D18545B00A2EC48 /* JSON+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29EB8741D18545B00A2EC48 /* JSON+Date.swift */; };
 		A29EB8771D18818000A2EC48 /* EditableTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29EB8761D18818000A2EC48 /* EditableTableCell.swift */; };
 		A29EB8791D1A6E6200A2EC48 /* DatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29EB8781D1A6E6200A2EC48 /* DatePickerCell.swift */; };
 		A2C131591D1707F200C2C83E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C131581D1707F200C2C83E /* AppDelegate.swift */; };
@@ -33,7 +32,6 @@
 		A23D1FCF1D17243B008BA24C /* Echo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Echo.xcdatamodel; sourceTree = "<group>"; };
 		A29EB8701D17E50500A2EC48 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A29EB8721D183F5E00A2EC48 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		A29EB8741D18545B00A2EC48 /* JSON+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Date.swift"; sourceTree = "<group>"; };
 		A29EB8761D18818000A2EC48 /* EditableTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditableTableCell.swift; sourceTree = "<group>"; };
 		A29EB8781D1A6E6200A2EC48 /* DatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerCell.swift; sourceTree = "<group>"; };
 		A2C131551D1707F200C2C83E /* Echo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,14 +102,10 @@
 		A2C131571D1707F200C2C83E /* Echo */ = {
 			isa = PBXGroup;
 			children = (
-				A2C582F71D1B03E000A1A676 /* Extensions */,
-				A23D1FD51D172808008BA24C /* Model */,
 				A2C131581D1707F200C2C83E /* AppDelegate.swift */,
-				A23D1FC51D1719B0008BA24C /* UsersViewController.swift */,
-				A29EB8721D183F5E00A2EC48 /* DetailViewController.swift */,
-				A2C1315E1D1707F200C2C83E /* Main.storyboard */,
-				A29EB8761D18818000A2EC48 /* EditableTableCell.swift */,
-				A29EB8781D1A6E6200A2EC48 /* DatePickerCell.swift */,
+				A23D1FD51D172808008BA24C /* Model */,
+				A2C582FA1D1B15A600A1A676 /* Controller */,
+				A2C582F91D1B159800A1A676 /* View */,
 				A2C131611D1707F200C2C83E /* Assets.xcassets */,
 				A2C131631D1707F200C2C83E /* LaunchScreen.storyboard */,
 				A2C131661D1707F200C2C83E /* Info.plist */,
@@ -120,12 +114,23 @@
 			path = Echo;
 			sourceTree = "<group>";
 		};
-		A2C582F71D1B03E000A1A676 /* Extensions */ = {
+		A2C582F91D1B159800A1A676 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A29EB8741D18545B00A2EC48 /* JSON+Date.swift */,
+				A2C1315E1D1707F200C2C83E /* Main.storyboard */,
+				A29EB8761D18818000A2EC48 /* EditableTableCell.swift */,
+				A29EB8781D1A6E6200A2EC48 /* DatePickerCell.swift */,
 			);
-			name = Extensions;
+			name = View;
+			sourceTree = "<group>";
+		};
+		A2C582FA1D1B15A600A1A676 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A23D1FC51D1719B0008BA24C /* UsersViewController.swift */,
+				A29EB8721D183F5E00A2EC48 /* DetailViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +262,6 @@
 				A29EB8731D183F5E00A2EC48 /* DetailViewController.swift in Sources */,
 				A29EB8771D18818000A2EC48 /* EditableTableCell.swift in Sources */,
 				A29EB8791D1A6E6200A2EC48 /* DatePickerCell.swift in Sources */,
-				A29EB8751D18545B00A2EC48 /* JSON+Date.swift in Sources */,
 				A29EB8711D17E50500A2EC48 /* User.swift in Sources */,
 				A23D1FC81D171FE1008BA24C /* DataSource.swift in Sources */,
 			);

@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-Echo.xcscheme</key>
+		<key>JSONCodable.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SwiftyJSON.xcscheme</key>
+		<key>Pods-Echo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0BB4EFF5B943929DD060B506D4BC62FC</key>
+		<key>244E052299C7C15FB82F0A69AE1A16D2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>58734CE903E46E97DBA545BB01401C11</key>
+		<key>A36F3C054F7BAD5D24798A9BEB2EEDCC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

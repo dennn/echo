@@ -51,6 +51,7 @@ class UsersViewController: UITableViewController, DataSourceProtocol {
             let currentUser = dataSource.getAllUsers()[currentRow!.row]
             let detailVC = segue.destinationViewController as! DetailViewController
             detailVC.currentUser = currentUser
+            detailVC.userDataSource = self.dataSource
             self.tableView.deselectRowAtIndexPath(currentRow!, animated: true)
         }
     }
