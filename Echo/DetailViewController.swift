@@ -15,6 +15,12 @@ enum CellType {
     case Other
 }
 
+enum UserCellRows : Int {
+    case FirstName = 0
+    case LastName = 1
+    case Email = 2
+}
+
 class DetailViewController: UITableViewController {
 
     var currentUser : User?
@@ -27,6 +33,7 @@ class DetailViewController: UITableViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        // TODO: We save no matter what at the moment, it should really be if the data has changed
         self.userDataSource!.saveUser(self.currentUser!)
     }
     
@@ -43,13 +50,13 @@ class DetailViewController: UITableViewController {
     private func cellTypeForIndexPath(indexPath : NSIndexPath) -> CellType {
         if indexPath.section == 0 {
             switch (indexPath.row) {
-                case 0, 1:
+                case 0, 1, 2:
                     return .InformationCell
                 
-                case 2:
+                case 3:
                     return .DateRow
                 
-                case 3:
+                case 4:
                     return .DatePicker
                 
                 default:
@@ -75,18 +82,25 @@ class DetailViewController: UITableViewController {
     
         switch (cellType) {
             case .InformationCell:
-                let cell = tableView.dequeueReusableCellWithIdentifier("editableCell", forIndexPath: indexPath) as! EditableTableCell
-                if indexPath.row == 0 {
-                    cell.configure("Full Name", description: (self.currentUser?.fullName)!)
-                } else if indexPath.row == 1 {
-                    cell.configure("Email", description: (self.currentUser?.email)!)
+                let informationCellRow = UserCellRows(rawValue: indexPath.row)
+                
+                let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! UserDataCell
+                if informationCellRow == .FirstName {
+                    cell.configure(self.currentUser?.firstName, cellType: informationCellRow!)
+                } else if informationCellRow == .LastName {
+                    cell.configure(self.currentUser?.lastName, cellType: informationCellRow!)
+                } else if informationCellRow == .Email {
+                    cell.configure(self.currentUser?.email, cellType: informationCellRow!)
                 }
+                
+                // Listen for when an event ends
+                cell.textField?.addTarget(self, action: #selector(self.textChanged(_:)), forControlEvents: .EditingChanged)
+                
                 return cell
             
             case .DatePicker:
                 let cell = tableView.dequeueReusableCellWithIdentifier("datePickerCell", forIndexPath: indexPath) as! DatePickerCell
-                cell.datePicker?.addTarget(self, action: #selector(DetailViewController.dateChanged(_:)), forControlEvents: .ValueChanged)
-                
+                cell.datePicker?.addTarget(self, action: #selector(self.dateChanged(_:)), forControlEvents: .ValueChanged)
                 cell.datePicker?.date = self.currentUser!.dateOfBirth
                 return cell
             
@@ -106,7 +120,7 @@ class DetailViewController: UITableViewController {
         if cellType == .DateRow {
             self.toggleDatePickerVisibility()
         } else if cellType == .InformationCell {
-            let cell = self.tableView .cellForRowAtIndexPath(indexPath) as! EditableTableCell
+            let cell = self.tableView .cellForRowAtIndexPath(indexPath) as! UserDataCell
             cell.activateTextField()
         }
         
@@ -132,7 +146,7 @@ class DetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -150,6 +164,21 @@ class DetailViewController: UITableViewController {
     func dateChanged(datePicker : UIDatePicker) {
         self.currentUser?.dateOfBirth = datePicker.date
         self.tableView.reloadData()
+    }
+    
+    func textChanged(textField : UITextField) {
+        let cellType = UserCellRows(rawValue: textField.tag)!
+        
+        switch (cellType) {
+            case UserCellRows.FirstName:
+                self.currentUser?.firstName = textField.text!
+            
+            case UserCellRows.LastName:
+                self.currentUser?.lastName = textField.text!
+       
+            case UserCellRows.Email:
+                self.currentUser?.email = textField.text!
+        }
     }
     
 }

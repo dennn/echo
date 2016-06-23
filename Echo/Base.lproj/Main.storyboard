@@ -62,7 +62,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="editableCell" id="76H-S2-jqs" customClass="EditableTableCell" customModule="Echo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userCell" id="76H-S2-jqs" customClass="UserDataCell" customModule="Echo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="76H-S2-jqs" id="1Oq-IA-pzN">
@@ -100,8 +100,8 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="cellLabel" destination="dNf-aD-beG" id="met-LZ-nh5"/>
-                                    <outlet property="cellTextField" destination="4Ne-KL-xB6" id="RA9-yT-84q"/>
+                                    <outlet property="label" destination="dNf-aD-beG" id="e70-IL-8te"/>
+                                    <outlet property="textField" destination="4Ne-KL-xB6" id="CcD-Nh-BCq"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="datePickerCell" rowHeight="218" id="sIL-WE-gNj" customClass="DatePickerCell" customModule="Echo" customModuleProvider="target">

@@ -70,6 +70,7 @@ class UserDataSource : DataSource {
     }
     
     func saveUser(user : User!) {
+        // Push the changes to the cloud
         let userRef = self.usersRef!.child("\(user.userID)")
         do {
             let userJSON = try user.toJSON()
