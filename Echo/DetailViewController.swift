@@ -32,11 +32,6 @@ class DetailViewController: UITableViewController {
         self.title = self.currentUser?.fullName
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        // TODO: We save no matter what at the moment, it should really be if the data has changed
-        self.userDataSource!.saveUser(self.currentUser!)
-    }
-    
     // MARK: Date Picker
 
     private func toggleDatePickerVisibility() {
@@ -163,6 +158,8 @@ class DetailViewController: UITableViewController {
     
     func dateChanged(datePicker : UIDatePicker) {
         self.currentUser?.dateOfBirth = datePicker.date
+        self.userDataSource!.saveUser(self.currentUser!)
+
         self.tableView.reloadData()
     }
     
@@ -179,6 +176,8 @@ class DetailViewController: UITableViewController {
             case UserCellRows.Email:
                 self.currentUser?.email = textField.text!
         }
+        
+        self.userDataSource!.saveUser(self.currentUser!)
     }
     
 }
