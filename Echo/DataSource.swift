@@ -41,26 +41,28 @@ class UserDataSource : DataSource {
     func listenForUserUpdates() {
         self.usersRef!.observeEventType(.Value, withBlock: { snapshot in
             
-            do {
                 var newUsers = [User]()
                 
                 for item in snapshot.children.allObjects as! [FIRDataSnapshot] {
-                    if item.value is Dictionary<String, AnyObject> {
-                        print (item.value)
-                        let user = try User(object: item.value! as! JSONObject)
-                        print(user)
-                        newUsers.append(user)
-                    } else {
-                        print("The data structure is not a dictionary...")
+                    do {
+
+                        if item.value is Dictionary<String, AnyObject> {
+                            print (item.value)
+                            var user = try User(object: item.value! as! JSONObject)
+                            user.userID = Int(item.key)
+                            print(user)
+                            newUsers.append(user)
+                        } else {
+                            print("The data structure is not a dictionary...")
+                        }
+                    } catch {
+                        print("Error decoding user JSON dictionary")
                     }
-                }
-                
+            
                 self.users = newUsers.sort({$0.userID < $1.userID})
                 
                 // Tell the delegate listener that there is a new data source
                 self.delegate?.dataSourceDidUpdate()
-            } catch {
-                print("Error decoding JSON dictionary")
             }
         })
     }
@@ -71,7 +73,7 @@ class UserDataSource : DataSource {
     
     func saveUser(user : User!) {
         // Push the changes to the cloud
-        let userRef = self.usersRef!.child("\(user.userID)")
+        let userRef = self.usersRef!.child("\(user.userID!)")
         do {
             let userJSON = try user.toJSON()
             print(userJSON)
@@ -84,5 +86,56 @@ class UserDataSource : DataSource {
         } catch {
             print("Error encoding the user as a JSON object")
         }
+    }
+}
+
+class MedicationDataSource : DataSource {
+    
+    var medicationRef : FIRDatabaseReference?
+    var medications = [Medication]()
+    weak var delegate : DataSourceProtocol?
+    
+    override init() {
+        super.init()
+        
+        self.medicationRef = self.databaseRef.child("medications")
+        self.listenForMedicationUpdates()
+        
+    }
+    
+    func listenForMedicationUpdates() {
+        self.medicationRef!.observeEventType(.Value, withBlock: { snapshot in
+                var newMedications = [Medication]()
+                
+                for item in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                    do {
+                        if item.value is Dictionary<String, AnyObject> {
+                            print (item.value)
+                            var medication = try! Medication(object: item.value! as! JSONObject)
+                            medication.id = Int(item.key)
+                            print(medication)
+                            newMedications.append(medication)
+                        } else {
+                            print("The data structure is not a dictionary...")
+                        }
+                    } catch {
+                        print("Error decoding medication JSON dictionary")
+                    }
+                }
+            
+            self.medications = newMedications
+            
+            // Tell the delegate listener that there is a new data source
+            self.delegate?.dataSourceDidUpdate()
+
+        })
+    }
+    
+    func getAllMedications() -> [Medication] {
+        return self.medications
+    }
+    
+    func getMedicationForID(id : Int) -> Medication {
+        return self.medications[id]
     }
 }

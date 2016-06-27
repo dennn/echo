@@ -11,7 +11,8 @@ import UIKit
 enum CellType {
     case DateRow
     case DatePicker
-    case InformationCell
+    case UserCell
+    case Medication
     case Other
 }
 
@@ -21,15 +22,18 @@ enum UserCellRows : Int {
     case Email = 2
 }
 
-class DetailViewController: UITableViewController {
+class DetailViewController: UITableViewController, DataSourceProtocol {
 
     var currentUser : User?
     private var shouldShowDatePicker = false
     var userDataSource : UserDataSource?
+    var medicationDataSource : MedicationDataSource?
 
     override func viewWillAppear(animated: Bool) {
         print("Current user is \(self.currentUser)")
         self.title = self.currentUser?.fullName
+        self.medicationDataSource = MedicationDataSource()
+        self.medicationDataSource?.delegate = self
     }
     
     // MARK: Date Picker
@@ -46,7 +50,7 @@ class DetailViewController: UITableViewController {
         if indexPath.section == 0 {
             switch (indexPath.row) {
                 case 0, 1, 2:
-                    return .InformationCell
+                    return .UserCell
                 
                 case 3:
                     return .DateRow
@@ -55,8 +59,10 @@ class DetailViewController: UITableViewController {
                     return .DatePicker
                 
                 default:
-                    return .Other
+                    return .Medication
             }
+        } else if indexPath.section == 1 {
+            return .Medication
         }
         
         return .Other
@@ -76,7 +82,7 @@ class DetailViewController: UITableViewController {
         let cellType = cellTypeForIndexPath(indexPath)
     
         switch (cellType) {
-            case .InformationCell:
+            case .UserCell:
                 let informationCellRow = UserCellRows(rawValue: indexPath.row)
                 
                 let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath) as! UserDataCell
@@ -106,6 +112,13 @@ class DetailViewController: UITableViewController {
            
             default:
                 let cell = UITableViewCell(style: .Default, reuseIdentifier: "normalCell")
+                if indexPath.section == 1 {
+                    let medication = self.medicationDataSource?.getMedicationForID(indexPath.row)
+                    cell.textLabel?.text = medication?.name
+                    if self.currentUser?.medicationList.contains(medication!.id!) == true {
+                        cell.accessoryType = .Checkmark
+                    }
+                }
                 return cell
         }
     }
@@ -114,9 +127,20 @@ class DetailViewController: UITableViewController {
         let cellType = cellTypeForIndexPath(indexPath)
         if cellType == .DateRow {
             self.toggleDatePickerVisibility()
-        } else if cellType == .InformationCell {
-            let cell = self.tableView .cellForRowAtIndexPath(indexPath) as! UserDataCell
+        } else if cellType == .UserCell {
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! UserDataCell
             cell.activateTextField()
+        } else if cellType == .Medication {
+            let medication = self.medicationDataSource?.getMedicationForID(indexPath.row)
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell!
+            if cell.accessoryType == UITableViewCellAccessoryType.Checkmark {
+                cell.accessoryType = .None
+                self.currentUser?.medicationList.remove(medication!.id!)
+            } else {
+                cell.accessoryType = .Checkmark
+                self.currentUser?.medicationList.insert(medication!.id!)
+            }
+            self.userDataSource!.saveUser(self.currentUser!)
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -141,7 +165,13 @@ class DetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if section == 0 {
+            return 5
+        } else if section == 1 {
+            return self.medicationDataSource!.getAllMedications().count
+        }
+        
+        return 0
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -180,4 +210,7 @@ class DetailViewController: UITableViewController {
         self.userDataSource!.saveUser(self.currentUser!)
     }
     
+    func dataSourceDidUpdate() {
+        self.tableView.reloadData()
+    }
 }

@@ -20,6 +20,7 @@
 		A2C131601D1707F200C2C83E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2C1315E1D1707F200C2C83E /* Main.storyboard */; };
 		A2C131621D1707F200C2C83E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2C131611D1707F200C2C83E /* Assets.xcassets */; };
 		A2C131651D1707F200C2C83E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2C131631D1707F200C2C83E /* LaunchScreen.storyboard */; };
+		A2C582FC1D1EAC5200A1A676 /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C582FB1D1EAC5200A1A676 /* Medication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		A2C131611D1707F200C2C83E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2C131641D1707F200C2C83E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2C131661D1707F200C2C83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2C582FB1D1EAC5200A1A676 /* Medication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				A23D1FC71D171FE1008BA24C /* DataSource.swift */,
 				A29EB8701D17E50500A2EC48 /* User.swift */,
+				A2C582FB1D1EAC5200A1A676 /* Medication.swift */,
 				A23D1FCE1D17243B008BA24C /* Echo.xcdatamodeld */,
 			);
 			name = Model;
@@ -263,6 +266,7 @@
 				A29EB8771D18818000A2EC48 /* UserDataCell.swift in Sources */,
 				A29EB8791D1A6E6200A2EC48 /* DatePickerCell.swift in Sources */,
 				A29EB8711D17E50500A2EC48 /* User.swift in Sources */,
+				A2C582FC1D1EAC5200A1A676 /* Medication.swift in Sources */,
 				A23D1FC81D171FE1008BA24C /* DataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
